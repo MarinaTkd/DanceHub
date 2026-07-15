@@ -1,28 +1,23 @@
-import { unstable_cache } from 'next/cache';
 import { getSupabase } from '@/lib/supabase';
 import { DanceEvent } from '@/types/event';
 import StyleFilter from '@/components/StyleFilter';
 
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
-const getEvents = unstable_cache(
-  async (): Promise<DanceEvent[]> => {
-    const { data, error } = await getSupabase()
-      .from('events')
-      .select('*')
-      .eq('is_visible', true)
-      .gt('start_at', new Date().toISOString())
-      .order('start_at', { ascending: true });
+async function getEvents(): Promise<DanceEvent[]> {
+  const { data, error } = await getSupabase()
+    .from('events')
+    .select('*')
+    .eq('is_visible', true)
+    .gt('start_at', new Date().toISOString())
+    .order('start_at', { ascending: true });
 
-    if (error) {
-      console.error('Failed to fetch events:', error.message);
-      return [];
-    }
-    return data ?? [];
-  },
-  ['events-listing'],
-  { revalidate: 3600 }
-);
+  if (error) {
+    console.error('Failed to fetch events:', error.message);
+    return [];
+  }
+  return data ?? [];
+}
 
 export default async function HomePage() {
   const events = await getEvents();

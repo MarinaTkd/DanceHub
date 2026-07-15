@@ -199,7 +199,7 @@ Build the main and only page of the site: a card grid of upcoming events with a 
 
 ### 6. Source Discovery Pipeline (Keyword Search)
 
-**Status:** [ ] pending
+**Status:** [x] done
 
 **Intent:**
 Set up a second Apify Actor run that periodically searches Facebook for new Prague dance events using keywords, and surfaces new source pages not yet in the curated list for manual review in Supabase.
