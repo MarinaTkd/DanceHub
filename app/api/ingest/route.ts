@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 import { classifyDanceStyles } from '@/lib/classify';
 
 interface ApifyItem {
@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
           };
 
           // 7. Upsert into Supabase
-          const { error } = await supabase
+          const { error } = await getSupabase()
             .from('events')
             .upsert(record, { onConflict: 'facebook_event_id' });
 

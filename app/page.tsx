@@ -1,5 +1,5 @@
 import { unstable_cache } from 'next/cache';
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 import { DanceEvent } from '@/types/event';
 import StyleFilter from '@/components/StyleFilter';
 
@@ -7,7 +7,7 @@ export const revalidate = 3600;
 
 const getEvents = unstable_cache(
   async (): Promise<DanceEvent[]> => {
-    const { data, error } = await supabase
+    const { data, error } = await getSupabase()
       .from('events')
       .select('*')
       .eq('is_visible', true)
