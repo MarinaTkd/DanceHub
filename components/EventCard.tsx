@@ -98,16 +98,19 @@ export default function EventCard({ event }: Props) {
           </p>
         )}
 
-        {/* Spacer + link */}
-        <div className="mt-auto pt-2">
+        {/* Spacer + link + source badge */}
+        <div className="mt-auto pt-2 flex items-center justify-between gap-2">
           <a
-            href={event.facebook_url}
+            href={event.facebook_url ?? event.source_url ?? '#'}
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
           >
-            View on Facebook →
+            {event.source === 'web' ? 'View event →' : 'View on Facebook →'}
           </a>
+          <span className="text-xs text-gray-400 shrink-0">
+            {event.source === 'web' ? '🌐 Web' : '📘 Facebook'}
+          </span>
         </div>
       </div>
     </article>

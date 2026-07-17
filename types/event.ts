@@ -9,6 +9,8 @@ export interface DanceEvent {
   location_address: string | null;
   cover_image_url: string | null;
   facebook_url: string;
+  source: string;
+  source_url: string | null;
   dance_styles: string[];
   is_visible: boolean;
   created_at: string;
