@@ -1,5 +1,7 @@
 import { DanceEvent } from '@/types/event';
 
+const FALLBACK_DANCE_IMAGE = 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80';
+
 interface Props {
   event: DanceEvent;
 }
@@ -18,19 +20,6 @@ const STYLE_COLORS: Record<string, string> = {
   other:            'bg-gray-100 text-gray-600',
 };
 
-const GRADIENT_MAP: Record<string, string> = {
-  salsa:            'from-rose-400 to-red-500',
-  bachata:          'from-orange-400 to-amber-500',
-  tango:            'from-red-500 to-rose-700',
-  swing:            'from-yellow-400 to-orange-400',
-  'lindy hop':      'from-amber-400 to-yellow-500',
-  kizomba:          'from-purple-500 to-violet-600',
-  zouk:             'from-pink-400 to-rose-500',
-  'west coast swing': 'from-sky-400 to-blue-500',
-  hustle:           'from-teal-400 to-cyan-500',
-  folk:             'from-green-400 to-emerald-500',
-};
-
 function capitalize(s: string): string {
   return s.replace(/\b\w/g, (c) => c.toUpperCase());
 }
@@ -45,24 +34,17 @@ function formatDate(iso: string): string {
 }
 
 export default function EventCard({ event }: Props) {
-  const firstStyle = event.dance_styles[0] ?? 'other';
-  const gradient = GRADIENT_MAP[firstStyle] ?? 'from-indigo-400 to-purple-500';
-
   return (
     <article className="bg-white border border-gray-200 rounded-2xl overflow-hidden flex flex-col">
       {/* Cover image */}
-      {event.cover_image_url ? (
-        <div className="aspect-video w-full overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={event.cover_image_url}
-            alt={event.title}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      ) : (
-        <div className={`aspect-video w-full bg-gradient-to-br ${gradient}`} aria-hidden="true" />
-      )}
+      <div className="aspect-video w-full overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={event.cover_image_url ?? FALLBACK_DANCE_IMAGE}
+          alt={event.title}
+          className="w-full h-full object-cover"
+        />
+      </div>
 
       {/* Body */}
       <div className="p-4 flex flex-col gap-2 flex-1">
